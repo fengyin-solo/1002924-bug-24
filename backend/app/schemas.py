@@ -239,11 +239,11 @@ class EnergyeffEntry(BaseModel):
     field_0: str | None = None  # 记录编号
     field_1: str | None = None  # 设备类型
     field_2: str | None = None  # 耗能量
-    field_3: str | None = None  # 单耗指标
-    field_4: str | None = None  # 对标基准
-    field_5: str | None = None  # 偏差比率
-    field_6: str | None = None  # 记录月份
-    field_7: str | None = None  # 能效状态
+    field_3: str | None = None  # 产量
+    field_4: str | None = None  # 记录月份
+    field_5: str | None = None  # 单耗指标（按设备类型+月份统一计算）
+    field_6: str | None = None  # 对标基准（口径配置）
+    field_7: str | None = None  # 偏差比率（统一口径计算）
 
 class ArchiveEntry(BaseModel):
     """设备档案明细结构。"""

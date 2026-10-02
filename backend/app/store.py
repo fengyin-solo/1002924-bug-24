@@ -14,9 +14,15 @@ class Store:
         self._tables: dict[str, list[dict[str, Any]]] = {
             name: [dict(row) for row in rows] for name, rows in SEED_ROWS.items()
         }
+        # 能效记录的超标/待分析标记一律以现行对标口径为准，启动时先重算一遍
+        if "energyeff" in self._tables:
+            from app.services import energyeff_calc
+
+            energyeff_calc.apply_spec(self._tables["energyeff"], self._tables.get("energyeff_benchmark", []))
 
     def module_names(self) -> list[str]:
-        return sorted(self._tables)
+        # 对标基准表是能效模块的口径配置，不单独算作业务模块
+        return sorted(name for name in self._tables if not name.endswith("_benchmark"))
 
     def rows(self, module: str) -> list[dict[str, Any]]:
         return self._tables.setdefault(module, [])
